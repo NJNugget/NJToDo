@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CardView" customModule="NJToDo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HgE-dE-eMz">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="128" id="cIS-wn-KYK"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="cIS-wn-KYK"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjB-o7-Yg5">
+                    <rect key="frame" x="156" y="253" width="263" height="95"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="HgE-dE-eMz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="D6y-xz-fsa"/>
+                <constraint firstItem="rjB-o7-Yg5" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FQR-4w-XwD"/>
+                <constraint firstItem="HgE-dE-eMz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="J9k-SG-eWF"/>
+                <constraint firstAttribute="bottom" secondItem="HgE-dE-eMz" secondAttribute="bottom" id="KUI-3b-jRO"/>
+                <constraint firstItem="HgE-dE-eMz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="R07-QH-Dro"/>
+                <constraint firstAttribute="trailing" secondItem="HgE-dE-eMz" secondAttribute="trailing" id="Ytf-Yz-BRL"/>
+                <constraint firstItem="rjB-o7-Yg5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZgT-W5-Lg7"/>
+                <constraint firstItem="HgE-dE-eMz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xCW-xe-qO6"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="HgE-dE-eMz" id="Pnr-56-H1Y"/>
+                <outlet property="lastminuteTitle" destination="rjB-o7-Yg5" id="TWH-tq-1r6"/>
+            </connections>
+        </view>
+    </objects>
+</document>
