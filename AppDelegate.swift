@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
+        configureStyling()
         return true
     }
 
@@ -44,4 +44,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+private extension AppDelegate {
+    
+    func configureStyling() {
+        
+        let tintColor = UIColor(red: 184.0/255.0, green: 50.0/255.0, blue: 43.0/255.0, alpha: 1.0)
+        
+        //window下所有原生控件都变成tintColor
+        window?.tintColor = tintColor
+        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont.systemFontOfSize(18)
+        ]
+        
+        UINavigationBar.appearance().barTintColor = tintColor
+        UINavigationBar.appearance().tintColor = .whiteColor()
+        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().barStyle = .BlackTranslucent
+    }
+}
+
 

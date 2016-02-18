@@ -22,6 +22,7 @@ class ViewController: UIViewController,UIAlertViewDelegate {
     var imageDict:[String] = []
     var priceDict:[String] = []
     var iconDict:[String] = []
+    var pidDict:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +61,7 @@ class ViewController: UIViewController,UIAlertViewDelegate {
             self.imageDict.removeAll()
             self.priceDict.removeAll()
             self.iconDict.removeAll()
+            self.pidDict.removeAll()
             if (self.dict.objectForKey("data") != nil){
                 
                 let json = JSON(self.dict.objectForKey("data")!)
@@ -68,6 +70,7 @@ class ViewController: UIViewController,UIAlertViewDelegate {
                     if(json.count>0){
                         self.titleDict.append(json[key]["title"].stringValue)
                         self.imageDict.append(json[key]["imgUrl"].stringValue)
+                        self.pidDict.append(json[key]["id"].stringValue)
                         let price = json[key]["price"].stringValue
                         var tmparray = price.componentsSeparatedByString("<em>")
                         if(tmparray.count>1){
@@ -106,6 +109,7 @@ extension ViewController: KolodaViewDelegate {
         }
         if(direction == .Right){
             print("right")
+            UIApplication.sharedApplication().openURL(NSURL(string: "lastminute://detail?id=\(pidDict[Int(index)])")!)
         }
         
     }
@@ -122,7 +126,7 @@ extension ViewController: KolodaViewDelegate {
     }
     
     func koloda(koloda: KolodaView, didSelectCardAtIndex index: UInt) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "http://yalantis.com/")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "http://m.qyer.com/z/deal/\(pidDict[Int(index)])/show=qyerasam")!)
     }
 }
 
