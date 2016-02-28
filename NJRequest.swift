@@ -10,7 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-let BaseURL = "http://open.qyer.com/"
+enum URLtype:String{
+    case QYER,NORIKAE
+}
+
+let BaseURLQY = "http://open.qyer.com/"
+let BaseURLNK = "http://mbapi.jorudan.co.jp/"
 
 class NJRequest: NSObject {
     typealias NJRequestSuccessBlock = (data:NSData)->Void
@@ -30,32 +35,54 @@ class NJRequest: NSObject {
         
     }
     func getServerTime(SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
-        self.sendRequest("app/time", method: ".GET", params: nil, success: SuccessBlock, failure: FailureBlock)
+        self.sendRequest(.QYER,path: "app/time", method: ".GET", params: nil, success: SuccessBlock, failure: FailureBlock)
     }
     func getLastminuteList(page:NSInteger,size:NSInteger,SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
         let params = NSMutableDictionary(capacity: 0)
         params.setObject(page, forKey: "page")
         params.setObject(size, forKey: "pageSize")
-        self.sendRequest("lastminute/app_selected_product", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
+        self.sendRequest(.QYER,path:"lastminute/app_selected_product", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
     }
-    
-    func sendRequest(var path:String,method:String,params:NSDictionary?,success:NJRequestSuccessBlock,failure:NJRequestFailureBlock){
+    func getRailPath(start:String,end:String,SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
+        let params = NSMutableDictionary(capacity: 0)
+        let startstr:String = "R" + start
+        let endstr:String = "R" + end
+        let c = "10"
+        let p = "0"
+        let bg = "1"
+        let tashainfo = "1"
+        let plusmode = "0"
+        params.setObject(plusmode, forKey: "plusmode")
+        params.setObject(NKVersion,forKey: "apv")
+        params.setObject(startstr,forKey: "t")
+        params.setObject(endstr,forKey: "f")
+        params.setObject(c,forKey: "c")
+        params.setObject(p,forKey: "p")
+        params.setObject(bg,forKey: "bg")
+        params.setObject(tashainfo,forKey: "tashainfo")
+        self.sendRequest(.NORIKAE, path: "iph/noriapl.cgi", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
         
-        path = BaseURL + path
+    }
+    func sendRequest( type:URLtype,var path:String,method:String,params:NSDictionary?,success:NJRequestSuccessBlock,failure:NJRequestFailureBlock){
+        switch type{
+        case .QYER:
+            path = BaseURLQY + path
+        case .NORIKAE:
+            path = BaseURLNK + path
+        default:
+            path = BaseURLQY + path
+        }
+        
         switch method{
         case ".GET":
-            Alamofire.request(.GET, path, parameters: params as? [String:AnyObject])
+            Alamofire.request(.GET, path, encoding:.URLEncodedInURL,parameters: params as? [String:AnyObject])
                 .responseData { response in
                     if let json = response.data {
                         success(data: json)
-                        
                     }
                     if let error = response.result.error{
                         failure(error: error)
                     }
-                    
-                        
-                    
             }
         case ".POST":
             Alamofire.request(.POST, path, parameters: params as? [String : AnyObject], encoding: .URL, headers: nil).response { (_, _, data, error) -> Void in

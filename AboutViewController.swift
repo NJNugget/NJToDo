@@ -40,4 +40,25 @@ class AboutViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let urlString = "乗換案内"
+        let start = "-東京"
+        let end = "-大阪"
+        let startJis = start.stringByAddingPercentEscapesUsingEncoding(NSShiftJISStringEncoding)
+        
+        let endJis = end.stringByAddingPercentEscapesUsingEncoding(NSShiftJISStringEncoding)
+        NJLoadingView.sharedInstace.showOverlayView(self.view)
+        NJRequest.sharedInstace.getRailPath(startJis!, end: endJis!, SuccessBlock: { (data) -> Void in
+            let str = String(data: data, encoding: NSShiftJISStringEncoding)
+//            print(str)
+            let datadict = str?.componentsSeparatedByString("\n\n")
+            for(var i=0;i<datadict?.count;i++){
+                print("第\(i)行:\(datadict![i])")
+                
+            }
+            NJLoadingView.sharedInstace.hideOverlayView()
+            }) { (error) -> Void in
+                print("error")
+        }
+    }
 }
