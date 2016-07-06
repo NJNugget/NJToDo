@@ -11,11 +11,12 @@ import Alamofire
 import SwiftyJSON
 
 enum URLtype:String{
-    case QYER,NORIKAE
+    case QYER,NORIKAE,SHUHUI
 }
 
 let BaseURLQY = "http://open.qyer.com/"
 let BaseURLNK = "http://mbapi.jorudan.co.jp/"
+let BaseURLSH = "http://www.ishuhui.net/ComicBooks/GetChapterList/"
 
 class NJRequest: NSObject {
     typealias NJRequestSuccessBlock = (data:NSData)->Void
@@ -43,6 +44,14 @@ class NJRequest: NSObject {
         params.setObject(size, forKey: "pageSize")
         self.sendRequest(.QYER,path:"lastminute/app_selected_product", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
     }
+    func getCountryList(SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
+        let params = NSMutableDictionary(capacity: 0)
+        let client_id = "qyer_planner_ios"
+        let client_secret = "e24e75dbf6fa3c49651f"
+        params.setObject(client_id, forKey: "client_id")
+        params.setObject(client_secret, forKey: "client_secret")
+        self.sendRequest(.QYER, path: "plan/country/list", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
+    }
     func getRailPath(start:String,end:String,SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
         let params = NSMutableDictionary(capacity: 0)
         let startstr:String = "R" + start
@@ -63,12 +72,20 @@ class NJRequest: NSObject {
         self.sendRequest(.NORIKAE, path: "iph/noriapl.cgi", method: ".GET", params: params, success: SuccessBlock, failure: FailureBlock)
         
     }
+    func getChapterList(PageIndex:Int,id:Int,SuccessBlock:NJRequestSuccessBlock,FailureBlock:NJRequestFailureBlock){
+        let params = NSMutableDictionary(capacity: 0)
+        params.setObject(PageIndex,forKey: "PageIndex")
+        params.setObject(id,forKey: "id")
+        self.sendRequest(.SHUHUI, path: "GetChapterList/", method: ".POST", params: params, success: SuccessBlock, failure: FailureBlock)
+    }
     func sendRequest( type:URLtype,var path:String,method:String,params:NSDictionary?,success:NJRequestSuccessBlock,failure:NJRequestFailureBlock){
         switch type{
         case .QYER:
             path = BaseURLQY + path
         case .NORIKAE:
             path = BaseURLNK + path
+        case .SHUHUI:
+            path = BaseURLSH + path
         default:
             path = BaseURLQY + path
         }
