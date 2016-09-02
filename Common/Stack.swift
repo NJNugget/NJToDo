@@ -62,11 +62,11 @@ class Queue{
 
 //树
 class TreeNode{
-    var val:Int
+    var value:Int
     var left:TreeNode?
     var right:TreeNode?
     init(_ val:Int){
-        self.val = val
+        self.value = val
         self.left = nil
         self.right = nil
     }
@@ -83,13 +83,25 @@ class TreeNode{
         guard let node = node else{
             return true
         }
-        if min != nil && node.val <= min {
+        if min != nil && node.value <= min {
             return false
         }
         
-        if max != nil && node.val >= max{
+        if max != nil && node.value >= max{
             return false
         }
-        return _helper(node.left, min, node.val) && _helper(node.right, node.val, max)
+        return _helper(node.left, min, node.value) && _helper(node.right, node.value, max)
+    }
+}
+
+class Algorithm{
+    func binarySearch(nums:[Int],target:Int)->Bool{
+        var left = 0
+        var right = nums.count-1
+        var mid = 0
+        while left <= right{
+            mid = (right-left / 2) + left
+        }
+        return false
     }
 }

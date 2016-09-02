@@ -49,6 +49,7 @@ class MoreTableViewController: UITableViewController {
             return 2
         }
     }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BasicCell", forIndexPath: indexPath)
         switch MoreSection(rawValue: indexPath.section)! {
